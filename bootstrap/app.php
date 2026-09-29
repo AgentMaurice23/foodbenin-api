@@ -11,9 +11,30 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
+    
+    ->withMiddleware(function ($middleware) {
+
+        $middleware->alias([
+
+            'super_admin' =>
+                \App\Http\Middleware\SuperAdminMiddleware::class,
+
+            'admin' =>
+                \App\Http\Middleware\AdminMiddleware::class,
+
+            'restaurant' =>
+                \App\Http\Middleware\RestaurantMiddleware::class,
+
+            'driver' =>
+                \App\Http\Middleware\DriverMiddleware::class,
+
+            'client' =>
+                \App\Http\Middleware\ClientMiddleware::class,
+        ]);
     })
+
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
+
+    
